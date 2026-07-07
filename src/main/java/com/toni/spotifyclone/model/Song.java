@@ -1,11 +1,26 @@
 package com.toni.spotifyclone.model;
 
+/**
+ * Representa una canción dentro de la aplicación
+ *
+ * Una canción contiene un identificador único,
+ * un título y el nombre del artista
+ *
+ * @author Toni
+ */
 public class Song {
 
     private Long id;
     private String titulo;
     private String artista;
 
+    /**
+     * Constructor de la canción
+     *
+     * @param id identificador único
+     * @param titulo título de la canción
+     * @param artista artista de la canción
+     */
     public Song(Long id, String titulo, String artista) {
         this.id = id;
         this.titulo = titulo;
