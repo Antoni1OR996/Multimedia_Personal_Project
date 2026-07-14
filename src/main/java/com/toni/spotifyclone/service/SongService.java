@@ -6,6 +6,7 @@ import com.toni.spotifyclone.exception.SongNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Servicio encargado de gestionar las canciones.
  *
@@ -76,6 +77,53 @@ public class SongService {
             }
         }
             throw new SongNotFoundException(id);
+    }
+
+    /**
+     * Crea una nueva canción y la añade a la colección
+     *
+     * @param song canción recibida desde el cliente
+     * @return canción creada
+     */
+    public Song createSong(Song song) {
+
+        Long nextId = (long) (songs.size() + 1);
+
+        song.setId(nextId);
+
+        songs.add(song);
+        return song;
+    }
+
+    /**
+     * Modifica los datos de una canción encontrado mediante su id
+     *
+     * @param id Identificador de la canción
+     * @param updatedSong cancion con los nuevos datos
+     *
+     * @return cancion modificada
+     */
+
+    public Song updateSong(Long id, Song updatedSong) {
+
+        Song song = getSongById(id);
+
+        song.setTitulo(updatedSong.getTitulo());
+        song.setArtista(updatedSong.getArtista());
+
+        return song;
+    }
+
+    /**
+     * Elimina una canción encontrado mediante su id
+     *
+     * @param id Identificador de la canción
+     */
+
+    public void deleteSong(Long id){
+        Song song = getSongById(id);
+
+        songs.remove(song);
     }
 
 }

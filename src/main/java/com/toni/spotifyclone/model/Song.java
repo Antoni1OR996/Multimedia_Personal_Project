@@ -27,6 +27,24 @@ public class Song {
         this.artista = artista;
     }
 
+    /**
+     * Constructor vacio para las request http post
+     */
+
+    public Song() {}
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setArtista(String artista) {
+        this.artista = artista;
+    }
+
     public Long getId() {
         return id;
     }

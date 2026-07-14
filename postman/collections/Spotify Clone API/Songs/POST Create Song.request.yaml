@@ -1,0 +1,14 @@
+$kind: http-request
+name: POST Create Song
+url: "{{baseUrl}}/songs"
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"titulo\": \"Numb\",\r
+
+    \    \"artista\": \"Linkin Park\"\r
+
+    }"
+order: 65986293638539
