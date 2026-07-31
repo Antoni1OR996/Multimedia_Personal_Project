@@ -8,7 +8,7 @@ package com.toni.spotifyclone.exception;
  */
 public class SongNotFoundException extends RuntimeException {
 
-    public SongNotFoundException(Long id) {
+    public SongNotFoundException(String id) {
         super("Canción con " + id + " no encontrada");
     }
 

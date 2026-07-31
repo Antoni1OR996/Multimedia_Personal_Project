@@ -1,0 +1,14 @@
+$kind: http-request
+name: PUT Update Song
+url: "{{baseUrl}}/songs/2"
+method: PUT
+body:
+  type: json
+  content: "{\r
+
+    \    \"titulo\": \"In the End\",\r
+
+    \    \"artista\": \"Linkin Park\"\r
+
+    }"
+order: 2892037659650346

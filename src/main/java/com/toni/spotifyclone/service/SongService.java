@@ -1,10 +1,13 @@
 package com.toni.spotifyclone.service;
 
 import com.toni.spotifyclone.model.Song;
+import com.toni.spotifyclone.repository.SongRepository;
+
 import org.springframework.stereotype.Service;
 import com.toni.spotifyclone.exception.SongNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -18,10 +21,11 @@ import java.util.List;
 @Service
 public class SongService {
     /**
-     *Lista de canciones almacenada en memoria
+     *Lista de canciones almacenada en memoria.
      */
 
-    private final List<Song> songs;
+    private final SongRepository songRepository;
+
 
     /**
      * Constructor del servicio.
@@ -30,100 +34,79 @@ public class SongService {
      * SongService al arrancar la aplicación.
      */
 
-    public SongService(){
+    public SongService(SongRepository songRepository) {
 
-        songs = new ArrayList<>();
-
-        songs.add(new Song(
-                1L,
-                "The Trooper",
-                "Iron Maiden"
-        ));
-
-        songs.add(new Song(
-                2L,
-                "Nothing Else Matters",
-                "Metallica"
-        ));
-
-        songs.add(new Song(
-                3L,
-                "Fear of the Dark",
-                "Iron Maiden"
-        ));
+        this.songRepository = songRepository;
 
     }
 
     /**
-     * Devuelve todas las canciones disponibles
+     * Devuelve todas las canciones disponibles.
      *
-     * @return lista de canciones
+     * @return lista de canciones.
      */
     public List<Song> getSongs() {
-        return songs;
+        return songRepository.findAll();
     }
 
     /**
-     * Realiza una búsqueda de una canción por su identificador
+     * Realiza una búsqueda de una canción por su identificador.
      *
-     * @param id identificador de la canción
-     * @return la canción buscada o null si no existe
+     * @param id identificador de la canción.
+     * @return canción encontrada.
+     * @throws SongNotFoundException si no existe una canción con ese identificador.
      */
-    public Song getSongById(Long id) {
+    public Song getSongById(String id) {
 
-        for(Song song : songs){
-            if(song.getId().equals(id)){
-                return song;
-            }
+        Optional<Song> song = songRepository.findById(id);
+
+        if (song.isPresent()) {
+            return song.get();
         }
-            throw new SongNotFoundException(id);
+        throw new SongNotFoundException(id);
     }
 
     /**
-     * Crea una nueva canción y la añade a la colección
+     * Crea una nueva canción y la añade a la colección.
      *
-     * @param song canción recibida desde el cliente
-     * @return canción creada
+     * @param song canción recibida desde el cliente.
+     * @return canción creada.
      */
     public Song createSong(Song song) {
 
-        Long nextId = (long) (songs.size() + 1);
-
-        song.setId(nextId);
-
-        songs.add(song);
-        return song;
+        return songRepository.save(song);
     }
 
     /**
-     * Modifica los datos de una canción encontrado mediante su id
+     * Modifica los datos de una canción encontrado mediante su id.
      *
-     * @param id Identificador de la canción
-     * @param updatedSong cancion con los nuevos datos
-     *
-     * @return cancion modificada
+     * @param id Identificador de la canción.
+     * @param updatedSong cancion con los nuevos datos.
+     * @return cancion modificada.
      */
 
-    public Song updateSong(Long id, Song updatedSong) {
+    public Song updateSong(String id, Song updatedSong) {
 
         Song song = getSongById(id);
 
         song.setTitulo(updatedSong.getTitulo());
         song.setArtista(updatedSong.getArtista());
 
-        return song;
+        return songRepository.save(song);
     }
 
     /**
-     * Elimina una canción encontrado mediante su id
+     * Elimina una canción encontrado mediante su id.
      *
-     * @param id Identificador de la canción
+     * @param id Identificador de la canción.
      */
 
-    public void deleteSong(Long id){
+    public void deleteSong(String id){
+
         Song song = getSongById(id);
 
-        songs.remove(song);
+        songRepository.delete(song);
     }
+
 
 }

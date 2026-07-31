@@ -1,0 +1,5 @@
+$kind: http-request
+name: DELETE Song
+url: "{{baseUrl}}/songs/2"
+method: DELETE
+order: 3665109388318246

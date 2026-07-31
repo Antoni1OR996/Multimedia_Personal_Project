@@ -1,39 +1,56 @@
 package com.toni.spotifyclone.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.annotation.Id;
+
 /**
- * Representa una canción dentro de la aplicación
+ * Representa una canción dentro de la aplicación.
  *
  * Una canción contiene un identificador único,
- * un título y el nombre del artista
+ * un título y el nombre del artista.
  *
  * @author Toni
  */
+@Document(collection = "songs")
 public class Song {
 
-    private Long id;
+    /**
+     * Identificador único de cada canción.
+     */
+    @Id
+    private String id;
+    /**
+     * Título de la canción.
+     */
     private String titulo;
+    /**
+     * Nombre del artista.
+     */
     private String artista;
 
     /**
      * Constructor de la canción
      *
-     * @param id identificador único
-     * @param titulo título de la canción
-     * @param artista artista de la canción
+     * @param id identificador único.
+     * @param titulo título de la canción.
+     * @param artista artista de la canción.
      */
-    public Song(Long id, String titulo, String artista) {
+    public Song(String id, String titulo, String artista) {
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
     }
 
     /**
-     * Constructor vacio para las request http post
+     * Constructor vacío necesario para que Jackson pueda
+     * crear objetos Song a partir de peticiones HTTP.
      */
 
-    public Song() {}
+    public Song() {
 
-    public void setId(Long id) {
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,7 +62,7 @@ public class Song {
         this.artista = artista;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
